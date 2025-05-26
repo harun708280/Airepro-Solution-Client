@@ -1,5 +1,8 @@
 import Layout from "@/layout/Layout";
-import DashBoard from "@/page/Dashboard";
+import DashboardPage from "@/page/Dashboard";
+import LoginPage from "@/page/LoginPage";
+import RegisterPage from "@/page/RegisterPage";
+
 import { createBrowserRouter } from "react-router-dom";
 
 
@@ -14,8 +17,18 @@ const router = createBrowserRouter([
     children:[
         {
             path:'/',
-            element:<DashBoard/>
+            element:<DashboardPage/>
         }
+        ,
+        {
+          path:'/login',
+          element:<LoginPage/>
+        },
+        {
+          path:'/register',
+          element:<RegisterPage/>
+        },
+
     ]
     
    
