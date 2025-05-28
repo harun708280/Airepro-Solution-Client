@@ -1,40 +1,47 @@
-// src/pages/RegisterPage.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
+      setIsLoading(false);
       return;
     }
 
     try {
-      // Backend এর /api/register এ POST request পাঠাবে
-      const response = await axios.post("/api/register", {
+      const response = await axios.post("http://localhost:5000/api/auth/register", {
         name,
         email,
         password,
       });
 
-      // রেজিস্ট্রেশন সফল হলে token সেট করবে (যদি API দেয়)
-      localStorage.setItem("token", response.data.token);
-
-      // তারপর ড্যাশবোর্ডে রিডাইরেক্ট করবে
-      navigate("/dashboard");
+      login(response.data.token); // Save token and fetch user info
+      navigate("/"); // Redirect to home
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Registration failed. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,16 +56,11 @@ export default function RegisterPage() {
           Create an Account Airepro Solution
         </h2>
 
-        {error && (
-          <p className="text-red-500 text-sm mb-3 text-center">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-sm mb-3 text-center">{error}</p>}
 
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-white"
-            >
+            <label htmlFor="name" className="block text-sm font-medium text-white">
               Full Name
             </label>
             <input
@@ -73,10 +75,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-white"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-white">
               Email
             </label>
             <input
@@ -91,10 +90,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-white"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-white">
               Password
             </label>
             <input
@@ -109,10 +105,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-white"
-            >
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">
               Confirm Password
             </label>
             <input
@@ -128,20 +121,22 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="w-full bg-[#041643] text-white py-2 rounded-md hover:bg-blue-700 transition"
+            className="w-full bg-[#041643] text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center"
+            disabled={isLoading}
           >
-            Register
+            {isLoading ? (
+              <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 
         <p className="mt-4 text-center text-sm text-white">
           Already have an account?{" "}
-          <a
-            href="/login"
-            className="text-blue-300 font-medium hover:underline"
-          >
+          <Link to="/login" className="text-blue-300 font-medium hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

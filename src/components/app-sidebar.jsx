@@ -49,10 +49,10 @@ export function AppSidebar({ ...props }) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
+            <SidebarMenuButton asChild className=" h- data-[slot=sidebar-menu-button]:!p-1.5">
               <a href="/dashboard">
-                <img src="/logo.png" className="h-5" alt="" />
-                <span className="text-base font-semibold">Airepro Solution.</span>
+                <img src="/logo.png" className="h-7" alt="" />
+                <span className="text-lg font-bold">Airepro Solution</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
