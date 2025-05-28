@@ -7,7 +7,6 @@ import { SiteHeader } from "@/components/site-header";
 const Layout = () => {
   const location = useLocation();
 
-  // Login/Register route গুলোর path তালিকা
   const noSidebarRoutes = ["/login", "/register"];
 
   const hideSidebar = noSidebarRoutes.includes(location.pathname);
