@@ -4,19 +4,16 @@ import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/Routes";
 import { AuthProvider } from "./context/AuthContext.jsx";
-
-
-
-
-
+import { ThemeProvider } from "./components/theme-provider";
 
 function MainApp() {
   return (
     <StrictMode>
-       <AuthProvider>
-      <RouterProvider router={router} />
-      </AuthProvider>
-      
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </ThemeProvider>
     </StrictMode>
   );
 }

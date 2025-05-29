@@ -51,7 +51,7 @@ const GoalList = () => {
         },
       });
       message.success('Goal deleted');
-      fetchGoals(); // Refresh list
+      fetchGoals();
     } catch (error) {
       console.error('Delete error:', error.message);
       message.error('Failed to delete goal');
@@ -60,7 +60,6 @@ const GoalList = () => {
 
   const handleSubmit = async (updatedGoal) => {
     if (updatedGoal._id) {
-      // update goal
       try {
         await axios.put(`http://localhost:5000/api/goals/${updatedGoal._id}`, updatedGoal, {
           headers: {
@@ -73,32 +72,36 @@ const GoalList = () => {
         message.error('Update failed');
       }
     }
-    // If it's a new goal, it’s already handled inside GoalFormModal via axios
     setModalVisible(false);
-    fetchGoals(); // Refresh after add/edit
+    fetchGoals();
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center">
-        <Title level={2}>Airepro Solution Goals</Title>
-        <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
-          Add Goal
+    <div className="p-4 sm:p-6 md:p-8">
+      {/* Header */}
+      <div className="flex flex-wrap justify-between items-center mb-6 gap-3">
+        <Title level={2} className="!m-0 text-gray-800 dark:text-white"> Airepro Solution Goals</Title>
+        <Button type="primary" onClick={handleAdd} className="rounded-md">
+          + Add Goal
         </Button>
       </div>
 
-      <Row gutter={[16, 16]}>
-        {goals.length > 0 ? (
-          goals.map((goal) => (
+      {/* Cards */}
+      {goals.length > 0 ? (
+        <Row gutter={[16, 16]}>
+          {goals.map((goal) => (
             <Col xs={24} sm={12} md={8} key={goal._id}>
-              <GoalCard goal={goal} onEdit={handleEdit} onDelete={handleDelete} fetchGoals={fetchGoals} />
+              <GoalCard goal={goal} onEdit={handleEdit} onDelete={handleDelete} />
             </Col>
-          ))
-        ) : (
-          <Empty description="No goals found." style={{ margin: 'auto' }} />
-        )}
-      </Row>
+          ))}
+        </Row>
+      ) : (
+        <div className="flex justify-center items-center h-[200px]">
+          <Empty description="No goals found." />
+        </div>
+      )}
 
+      {/* Modal */}
       <GoalFormModal
         visible={modalVisible}
         onCancel={() => setModalVisible(false)}

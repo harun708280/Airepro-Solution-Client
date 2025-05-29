@@ -8,12 +8,13 @@ const { Title } = Typography;
 
 const GoalsPage = () => {
   return (
-    <Layout style={{ minHeight: '100vh', padding: '2rem' }}>
-      <Content>
+    <div className="p-6">
+         <GoalList />
+
+    </div>
         
-        <GoalList />
-      </Content>
-    </Layout>
+       
+     
   );
 };
 
