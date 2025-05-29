@@ -22,7 +22,7 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
       }
     >
       <p>Type: <Tag color="blue">{goal.type}</Tag></p>
-      <p className="my-3">Status: <Tag color="green">{goal.progress}</Tag></p>
+      <p className="my-3">Status <Tag color="green">{goal.progress}</Tag></p>
     </Card>
   );
 };

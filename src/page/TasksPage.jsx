@@ -28,6 +28,24 @@ const TasksPage = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    console.log(id);
+    
+    try {
+      await axios.delete(`http://localhost:5000/api/tasks/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetchTasks();
+      message.success("Task deleted");
+     
+    } catch (error) {
+      console.error("Delete failed:", error.message);
+      message.error("Failed to delete task");
+    }
+  };
+
   const updateTaskStatus = async (id, status) => {
     try {
       const task = tasks.find((t) => t._id === id);
@@ -37,9 +55,7 @@ const TasksPage = () => {
         updatedTask,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setTasks((prev) =>
-        prev.map((t) => (t._id === id ? res.data : t))
-      );
+      setTasks((prev) => prev.map((t) => (t._id === id ? res.data : t)));
     } catch (error) {
       message.error("Status update failed.");
     }
@@ -52,7 +68,8 @@ const TasksPage = () => {
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
-    ) return;
+    )
+      return;
 
     const taskId = draggableId;
     const newStatus = destination.droppableId;
@@ -81,7 +98,7 @@ const TasksPage = () => {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center flex-wrap mb-6">
         <Title level={3}>Drag & Drop Task Board</Title>
         <Button type="primary" onClick={() => setModalOpen(true)}>
           Add Task
@@ -89,10 +106,12 @@ const TasksPage = () => {
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Row gutter={16}>
+        <Row gutter={[16, 16]}>
           {Object.entries(groupedTasks).map(([status, taskList]) => (
-            <Col span={8} key={status}>
-              <div className={`p-4 transition-all duration-300 rounded-lg border ${statusColors[status]}`}>
+            <Col key={status} xs={24} sm={24} md={12} lg={8}>
+              <div
+                className={`p-4 transition-all duration-300 rounded-lg border ${statusColors[status]}`}
+              >
                 <Title level={4} className="capitalize mb-4">
                   {statusLabels[status]} ({taskList.length})
                 </Title>
@@ -125,10 +144,7 @@ const TasksPage = () => {
                                     )
                                   )
                                 }
-                                onDelete={(id) =>
-                                  setTasks((prev) =>
-                                    prev.filter((item) => item._id !== id)
-                                  )
+                                onDelete={handleDelete
                                 }
                                 fetchTasks={fetchTasks}
                               />
@@ -153,6 +169,7 @@ const TasksPage = () => {
           setTasks((prev) => [...prev, task]);
           setModalOpen(false);
         }}
+        fetchTasks={fetchTasks}
       />
     </div>
   );

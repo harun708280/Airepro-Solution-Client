@@ -1,49 +1,51 @@
-import React from 'react';
+import { AuthContext } from '@/context/AuthContext';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import RecentTasksPanel from '@/components/RecentTasksPanel';
+import RecentGoalsTable from '@/components/RecentGoalsPanel';
 
 const DashboardPage = () => {
+  const { user } = useContext(AuthContext);
+  const [quote, setQuote] = useState('');
+
+  useEffect(() => {
+  const fetchQuote = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/quote');
+      if (res.data && res.data.length > 0) {
+        const { q, a } = res.data[0]; // 🟢 শুধু q = quote, a = author
+        setQuote(`${q} — ${a}`);
+      }
+    } catch (error) {
+      console.error('Failed to fetch quote:', error);
+      setQuote("Stay motivated and focused! — Unknown");
+    }
+  };
+
+  fetchQuote();
+}, []);
+
+
+  console.log(quote);
+  
+
   return (
-    <div className="min-h-screen  text-white">
+    <div className="min-h-screen ">
       {/* Header */}
-      <header className="p-6 flex justify-between items-center bg-white bg-opacity-10 backdrop-blur-md shadow-lg">
-        <h1 className="text-2xl font-bold">Welcome, Harun!</h1>
-        <button className='!bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-700'>
-          Logout
-        </button>
+      <header className="bg-white/80 backdrop-blur-md shadow-md rounded-b-xl px-6 py-5 sticky top-0 z-10">
+        <h1 className="text-3xl font-semibold text-gray-900">
+          Welcome, <span className="text-indigo-600">{user?.name}</span>!
+        </h1>
+        <p className="mt-2 italic text-gray-600 max-w-xl">{`"${quote}"`}</p>
       </header>
 
-      {/* Main Content */}
+      
       <main className="p-6 space-y-6">
-        
-        {/* Motivational Quote */}
-        <section className="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold mb-2">✨ Motivational Quote</h2>
-          <p className="italic text-lg">"Success is not final, failure is not fatal: It is the courage to continue that counts." — Winston Churchill</p>
-        </section>
-
         {/* Today's Tasks */}
-        <section className="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow-md">
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="text-xl font-semibold">✅ Today's Tasks</h2>
-            <button className="text-sm underline">View All</button>
-          </div>
-          <ul className="space-y-2">
-            <li className="bg-white bg-opacity-20 p-3 rounded-lg">✔ Finish project report</li>
-            <li className="bg-white bg-opacity-20 p-3 rounded-lg">❗ Prepare for meeting</li>
-            <li className="bg-white bg-opacity-20 p-3 rounded-lg">📚 Read 10 pages of a book</li>
-          </ul>
-        </section>
+        <RecentTasksPanel />
 
         {/* Goals Summary */}
-        <section className="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow-md">
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="text-xl font-semibold">🎯 Your Goals</h2>
-            <button className="text-sm underline">View All</button>
-          </div>
-          <ul className="space-y-2">
-            <li className="bg-white bg-opacity-20 p-3 rounded-lg">🚀 Launch mini-project by Friday</li>
-            <li className="bg-white bg-opacity-20 p-3 rounded-lg">🏋️ Exercise 3 times this week</li>
-          </ul>
-        </section>
+        <RecentGoalsTable/>
       </main>
     </div>
   );

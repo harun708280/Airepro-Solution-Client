@@ -12,7 +12,7 @@ import {
 import dayjs from "dayjs";
 import EditTaskModal from "./EditTaskModal";
 
-const TaskCard = ({ task, onEdit, onDelete,fetchTasks }) => {
+const TaskCard = ({ task, onEdit, onDelete, fetchTasks }) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
 
   const statusColor = {
@@ -25,7 +25,11 @@ const TaskCard = ({ task, onEdit, onDelete,fetchTasks }) => {
 
   const menu = (
     <Menu>
-      <Menu.Item key="edit" icon={<Pencil size={16} />} onClick={() => setEditModalOpen(true)}>
+      <Menu.Item
+        key="edit"
+        icon={<Pencil size={16} />}
+        onClick={() => setEditModalOpen(true)}
+      >
         Edit
       </Menu.Item>
       <Menu.Item key="delete" danger icon={<Trash2 size={16} />}>
@@ -45,8 +49,9 @@ const TaskCard = ({ task, onEdit, onDelete,fetchTasks }) => {
     <>
       <Card
         title={
-          <div className="flex items-center gap-2">
-            <ListTodo size={18} /> {task.title}
+          <div className="flex items-center gap-2 flex-wrap">
+            <ListTodo size={18} />{" "}
+            <span className="text-base font-medium">{task.title}</span>
           </div>
         }
         extra={
@@ -54,10 +59,11 @@ const TaskCard = ({ task, onEdit, onDelete,fetchTasks }) => {
             <EllipsisOutlined style={{ fontSize: 20, cursor: "pointer" }} />
           </Dropdown>
         }
-        className="mb-4 shadow-md"
+        className="mb-4 shadow-md w-full"
+        bodyStyle={{ padding: "12px" }}
       >
         {task.description && (
-          <p className="flex items-center gap-2 text-gray-700 mb-2">
+          <p className="flex items-center gap-2 text-gray-700 mb-2 text-sm">
             <Info size={16} /> {task.description}
           </p>
         )}
@@ -84,7 +90,6 @@ const TaskCard = ({ task, onEdit, onDelete,fetchTasks }) => {
         task={task}
         onSave={onEdit}
         fetchTasks={fetchTasks}
-
       />
     </>
   );
