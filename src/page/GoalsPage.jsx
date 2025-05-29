@@ -1,20 +1,12 @@
-import React from 'react';
-import { Layout, Typography } from 'antd';
-import GoalList from '@/components/GoalList';
-
-
-const { Content } = Layout;
-const { Title } = Typography;
+import React from "react";
+import { Layout, Typography } from "antd";
+import GoalList from "@/components/GoalList";
 
 const GoalsPage = () => {
   return (
     <div className="p-6">
-         <GoalList />
-
+      <GoalList />
     </div>
-        
-       
-     
   );
 };
 

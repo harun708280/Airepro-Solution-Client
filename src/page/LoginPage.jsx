@@ -10,21 +10,20 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Spinner state
+  const [isLoading, setIsLoading] = useState(false); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    setIsLoading(true); // Start loading
-
+    setIsLoading(true); 
     try {
       const response = await axios.post("https://airepro-solution-server.vercel.app/api/auth/login", {
         email,
         password,
       });
 
-      login(response.data.token); // Set token and trigger user fetch
-      navigate("/"); // Redirect to home
+      login(response.data.token); 
+      navigate("/"); 
     } catch (err) {
       if (err.response && err.response.data.message) {
         setError(err.response.data.message);
@@ -32,7 +31,7 @@ export default function LoginPage() {
         setError("Login failed. Please try again.");
       }
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false); 
     }
   };
 

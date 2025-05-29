@@ -16,11 +16,13 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
       className="rounded-xl bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-md border-gray-200 dark:border-gray-700"
       bodyStyle={{ padding: "20px" }}
     >
-      {/* Header: Title + Actions */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-2">
           <FlagOutlined className="text-blue-500 mt-1" />
-          <Title level={5} className="!m-0 text-lg text-gray-800 dark:text-white">
+          <Title
+            level={5}
+            className="!m-0 text-lg text-gray-800 dark:text-white"
+          >
             {goal.title}
           </Title>
         </div>
@@ -51,7 +53,6 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
         </div>
       </div>
 
-      {/* Content Section */}
       <div className="mt-4 space-y-3">
         <div>
           <Text className="text-sm text-gray-500 dark:text-gray-400">Type</Text>
@@ -61,8 +62,14 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
         </div>
 
         <div>
-          <Text className="text-sm text-gray-500 dark:text-gray-400">Status</Text>
-          <Tag color="green" className="ml-2 capitalize" icon={<CheckCircleOutlined />}>
+          <Text className="text-sm text-gray-500 dark:text-gray-400">
+            Status
+          </Text>
+          <Tag
+            color="green"
+            className="ml-2 capitalize"
+            icon={<CheckCircleOutlined />}
+          >
             {goal.progress}
           </Tag>
         </div>

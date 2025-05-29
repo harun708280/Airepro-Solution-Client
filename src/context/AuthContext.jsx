@@ -1,4 +1,3 @@
-// context/AuthContext.js
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
@@ -16,11 +15,14 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const res = await axios.get("https://airepro-solution-server.vercel.app/api/auth/me", {
-        headers: {
-          Authorization: `Bearer ${activeToken}`,
-        },
-      });
+      const res = await axios.get(
+        "https://airepro-solution-server.vercel.app/api/auth/me",
+        {
+          headers: {
+            Authorization: `Bearer ${activeToken}`,
+          },
+        }
+      );
       setUser(res.data);
     } catch (err) {
       console.log("User fetch failed", err.message);
@@ -36,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = (newToken) => {
     localStorage.setItem("token", newToken);
-    setToken(newToken); // Trigger useEffect
+    setToken(newToken);
   };
 
   const logout = () => {

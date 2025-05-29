@@ -13,9 +13,12 @@ const RecentTasksPanel = () => {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("https://airepro-solution-server.vercel.app/api/tasks", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "https://airepro-solution-server.vercel.app/api/tasks",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         const sorted = res.data
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -32,9 +35,11 @@ const RecentTasksPanel = () => {
 
   return (
     <div className="bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-md p-6 rounded-xl shadow-md transition-colors duration-300">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-        <Title level={4} className="!mb-0 text-gray-900 dark:text-white text-lg sm:text-xl">
+        <Title
+          level={4}
+          className="!mb-0 text-gray-900 dark:text-white text-lg sm:text-xl"
+        >
           Recent Tasks
         </Title>
         <Button type="link" onClick={() => navigate("/tasks")} className="p-0">
@@ -42,14 +47,19 @@ const RecentTasksPanel = () => {
         </Button>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden text-left">
           <thead className="bg-gray-100 dark:bg-gray-800 hidden sm:table-header-group">
             <tr>
-              <th className="px-4 py-3 text-gray-700 dark:text-gray-300 font-semibold">Title</th>
-              <th className="px-4 py-3 text-gray-700 dark:text-gray-300 font-semibold">Status</th>
-              <th className="px-4 py-3 text-gray-700 dark:text-gray-300 font-semibold">Created At</th>
+              <th className="px-4 py-3 text-gray-700 dark:text-gray-300 font-semibold">
+                Title
+              </th>
+              <th className="px-4 py-3 text-gray-700 dark:text-gray-300 font-semibold">
+                Status
+              </th>
+              <th className="px-4 py-3 text-gray-700 dark:text-gray-300 font-semibold">
+                Created At
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -66,15 +76,23 @@ const RecentTasksPanel = () => {
                     className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors sm:table-row flex flex-col sm:flex-row sm:items-center px-4 py-2 sm:px-0 sm:py-0"
                   >
                     <td className="px-0 sm:px-4 py-2 text-gray-900 dark:text-gray-100 font-medium">
-                      <span className="block sm:hidden text-sm text-gray-500">Title:</span>
+                      <span className="block sm:hidden text-sm text-gray-500">
+                        Title:
+                      </span>
                       {title}
                     </td>
-                    <td className={`px-0 sm:px-4 py-2 font-semibold ${statusColor}`}>
-                      <span className="block sm:hidden text-sm text-gray-500">Status:</span>
+                    <td
+                      className={`px-0 sm:px-4 py-2 font-semibold ${statusColor}`}
+                    >
+                      <span className="block sm:hidden text-sm text-gray-500">
+                        Status:
+                      </span>
                       {status.toUpperCase()}
                     </td>
                     <td className="px-0 sm:px-4 py-2 text-gray-700 dark:text-gray-300">
-                      <span className="block sm:hidden text-sm text-gray-500">Created At:</span>
+                      <span className="block sm:hidden text-sm text-gray-500">
+                        Created At:
+                      </span>
                       {new Date(createdAt).toLocaleString()}
                     </td>
                   </tr>
@@ -82,7 +100,10 @@ const RecentTasksPanel = () => {
               })
             ) : (
               <tr>
-                <td colSpan={3} className="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
+                <td
+                  colSpan={3}
+                  className="px-4 py-6 text-center text-gray-500 dark:text-gray-400"
+                >
                   No recent tasks found.
                 </td>
               </tr>

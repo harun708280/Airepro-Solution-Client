@@ -52,51 +52,61 @@ const TaskCard = ({ task, onEdit, onDelete, fetchTasks }) => {
   return (
     <>
       <Card
-  title={
-    <div className="flex items-center gap-2 flex-wrap">
-      <ListTodo size={18} className="text-gray-900 dark:text-white" />
-      <span className="text-base font-medium text-gray-900 dark:text-white">{task.title}</span>
-    </div>
-  }
-  extra={
-    <Dropdown 
-      menu={menu} 
-      trigger={["click"]} 
-      placement="bottomRight" 
-      overlayClassName="dark:backdrop-blur-md dark:bg-black/70 rounded-lg shadow-lg"
-    >
-      <EllipsisOutlined 
-        style={{ fontSize: 20, cursor: "pointer", color: "inherit" }} 
-        className="text-gray-900 dark:text-white" 
-      />
-    </Dropdown>
-  }
-  className="mb-4 w-full rounded-lg border border-gray-300 dark:border-gray-700
+        title={
+          <div className="flex items-center gap-2 flex-wrap">
+            <ListTodo size={18} className="text-gray-900 dark:text-white" />
+            <span className="text-base font-medium text-gray-900 dark:text-white">
+              {task.title}
+            </span>
+          </div>
+        }
+        extra={
+          <Dropdown
+            menu={menu}
+            trigger={["click"]}
+            placement="bottomRight"
+            overlayClassName="dark:backdrop-blur-md dark:bg-black/70 rounded-lg shadow-lg"
+          >
+            <EllipsisOutlined
+              style={{ fontSize: 20, cursor: "pointer", color: "inherit" }}
+              className="text-gray-900 dark:text-white"
+            />
+          </Dropdown>
+        }
+        className="mb-4 w-full rounded-lg border border-gray-300 dark:border-gray-700
              bg-white  dark:bg-black/40 dark:backdrop-blur-md shadow-lg"
-  bodyStyle={{ padding: "12px" }}
->
-  {task.description && (
-    <p className="flex items-center gap-2 text-gray-700 dark:text-gray-300 mb-2 text-sm">
-      <Info size={16} className="text-gray-700 dark:text-gray-300" /> {task.description}
-    </p>
-  )}
+        bodyStyle={{ padding: "12px" }}
+      >
+        {task.description && (
+          <p className="flex items-center gap-2 text-gray-700 dark:text-gray-300 mb-2 text-sm">
+            <Info size={16} className="text-gray-700 dark:text-gray-300" />{" "}
+            {task.description}
+          </p>
+        )}
 
-  <div className="text-sm text-gray-500 dark:text-gray-400 space-y-1">
-    <p className="flex items-center gap-2">
-      <CalendarDays size={16} className="text-gray-500 dark:text-gray-400" /> Start: {formatDate(task.startDate)}
-    </p>
-    <p className="flex items-center gap-2">
-      <CalendarCheck size={16} className="text-gray-500 dark:text-gray-400" /> End: {formatDate(task.endDate)}
-    </p>
-  </div>
+        <div className="text-sm text-gray-500 dark:text-gray-400 space-y-1">
+          <p className="flex items-center gap-2">
+            <CalendarDays
+              size={16}
+              className="text-gray-500 dark:text-gray-400"
+            />{" "}
+            Start: {formatDate(task.startDate)}
+          </p>
+          <p className="flex items-center gap-2">
+            <CalendarCheck
+              size={16}
+              className="text-gray-500 dark:text-gray-400"
+            />{" "}
+            End: {formatDate(task.endDate)}
+          </p>
+        </div>
 
-  <div className="mt-2">
-    <Tag color={statusColor[task.status] || "default"}>
-      {task.status.toUpperCase()}
-    </Tag>
-  </div>
-</Card>
-
+        <div className="mt-2">
+          <Tag color={statusColor[task.status] || "default"}>
+            {task.status.toUpperCase()}
+          </Tag>
+        </div>
+      </Card>
 
       <EditTaskModal
         open={editModalOpen}

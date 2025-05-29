@@ -1,13 +1,55 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Airepro-Solution Mini Productivity Dashboard
 
-Currently, two official plugins are available:
+A full-stack productivity dashboard to manage daily tasks and goals, built with React.js, Node.js, Express, and MongoDB. Users can authenticate securely with JWT, create, update, drag and drop tasks, view motivational quotes, and toggle between dark and light themes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## [Click here to view the Live App](https://airepro-solution.netlify.app/)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# Airepro-Solution-Client
+- JWT-based user authentication (Login/Register)
+- CRUD operations for Tasks and Goals
+- Drag-and-drop task management (To Do, In Progress, Done)
+- Motivational quote fetched from external API
+- Light/Dark theme toggle
+- Responsive UI with Ant Design and Tailwind CSS
+- Realtime UI updates with optimistic rendering
+
+---
+
+## Tech Stack
+
+### Frontend:
+
+- React.js
+- Ant Design
+- Tailwind CSS
+- Axios
+- @hello-pangea/dnd
+
+### Backend:
+
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- JSON Web Tokens (JWT)
+- dotenv
+
+---
+
+### 1. Clone the repo client site :
+
+- https://github.com/harun708280/Airepro-Solution-Client.git
+-  Airepro-Solution
+- npm install
+- npm run dev
+
+### 2. Clone the repo Backend
+
+- https://github.com/harun708280/Airepro-Solution-Server.git
+
+- PORT=5000
+- MONGODB_URI=mongodb_connection_string
+- JWT_SECRET=jwt_secret
+- npm install
+- nodemon

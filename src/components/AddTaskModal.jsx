@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal, Form, Input, DatePicker, Select, Checkbox, message, Button } from "antd";
+import { Modal, Form, Input, DatePicker, Select, Checkbox, Button } from "antd";
 import axios from "axios";
 import { AuthContext } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 const { TextArea } = Input;
 
-const AddTaskModal = ({ open, onClose,fetchTasks }) => {
+const AddTaskModal = ({ open, onClose, fetchTasks }) => {
   const [form] = Form.useForm();
   const { user } = useContext(AuthContext);
   const token = localStorage.getItem("token");
@@ -23,9 +24,6 @@ const AddTaskModal = ({ open, onClose,fetchTasks }) => {
         endDate: values.endDate ? values.endDate.toISOString() : null,
       };
 
-      console.log("🚀 Submitted Task Data:", formattedData);
-
-      // Axios API call
       const response = await axios.post(
         "https://airepro-solution-server.vercel.app/api/tasks",
         formattedData,
@@ -36,19 +34,19 @@ const AddTaskModal = ({ open, onClose,fetchTasks }) => {
         }
       );
 
-      fetchTasks()
+      toast.success(" Task saved successfully!");
 
+      fetchTasks();
       form.resetFields();
       onClose();
     } catch (error) {
-      if (error.response) {
-        message.error(`❌ Error: ${error.response.data.message || "Failed to save task."}`);
+      if (error.response?.data?.message) {
+        toast.error(` ${error.response.data.message}`);
       } else if (error.name === "Error") {
-        message.error("Please fill all required fields correctly.");
+        toast.error(" Please fill all required fields correctly.");
       } else {
-        message.error("Something went wrong.");
+        toast.error(" Something went wrong.");
       }
-      console.error("🛑 API Error:", error);
     } finally {
       setLoading(false);
     }

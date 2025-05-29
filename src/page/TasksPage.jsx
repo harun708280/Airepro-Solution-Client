@@ -18,9 +18,12 @@ const TasksPage = () => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("https://airepro-solution-server.vercel.app/api/tasks", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://airepro-solution-server.vercel.app/api/tasks",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setTasks(res.data);
     } catch (error) {
       message.error("Failed to load tasks.");
@@ -29,11 +32,14 @@ const TasksPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://airepro-solution-server.vercel.app/api/tasks/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://airepro-solution-server.vercel.app/api/tasks/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       fetchTasks();
       message.success("Task deleted");
     } catch (error) {
@@ -43,9 +49,9 @@ const TasksPage = () => {
   };
 
   const updateTaskStatus = async (id, status) => {
+    const prevTask = tasks.find((t) => t._id === id);
     try {
-      const task = tasks.find((t) => t._id === id);
-      const updatedTask = { ...task, status };
+      const updatedTask = { ...prevTask, status };
       const res = await axios.put(
         `https://airepro-solution-server.vercel.app/api/tasks/${id}`,
         updatedTask,
@@ -53,7 +59,8 @@ const TasksPage = () => {
       );
       setTasks((prev) => prev.map((t) => (t._id === id ? res.data : t)));
     } catch (error) {
-      message.error("Status update failed.");
+      message.error("Status update failed. Reverting...");
+      setTasks((prev) => prev.map((t) => (t._id === id ? prevTask : t)));
     }
   };
 
@@ -69,6 +76,13 @@ const TasksPage = () => {
 
     const taskId = draggableId;
     const newStatus = destination.droppableId;
+
+    setTasks((prev) =>
+      prev.map((task) =>
+        task._id === taskId ? { ...task, status: newStatus } : task
+      )
+    );
+
     updateTaskStatus(taskId, newStatus);
   };
 
@@ -93,7 +107,7 @@ const TasksPage = () => {
   };
 
   return (
-    <div className="p-6  min-h-screen transition-all duration-300">
+    <div className="p-6 min-h-screen transition-all duration-300">
       <div className="flex justify-between items-center flex-wrap mb-6">
         <Title level={3} className="!text-gray-900 dark:!text-white">
           Drag & Drop Task Board

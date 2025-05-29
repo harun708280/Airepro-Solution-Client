@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Modal, Form, Input, Select, message } from 'antd';
+import { Modal, Form, Input, Select } from 'antd';
 import axios from 'axios';
 import { AuthContext } from '@/context/AuthContext';
+import { toast } from 'sonner';
 
 const { Option } = Select;
 
-const GoalFormModal = ({ visible, onCancel, onSubmit, initialData,fetchGoals }) => {
+const GoalFormModal = ({ visible, onCancel, onSubmit, initialData, fetchGoals }) => {
   const [form] = Form.useForm();
   const { user } = useContext(AuthContext);
   const userId = user?._id;
-  const [loading, setLoading] = useState(false); // ⏳ Spinner state
+  const [loading, setLoading] = useState(false); 
 
   useEffect(() => {
     if (initialData) {
@@ -21,7 +22,7 @@ const GoalFormModal = ({ visible, onCancel, onSubmit, initialData,fetchGoals }) 
 
   const handleOk = async () => {
     try {
-      setLoading(true); 
+      setLoading(true);
       const values = await form.validateFields();
 
       if (!initialData) {
@@ -29,7 +30,6 @@ const GoalFormModal = ({ visible, onCancel, onSubmit, initialData,fetchGoals }) 
           'https://airepro-solution-server.vercel.app/api/goals',
           {
             ...values,
-            
             userId,
           },
           {
@@ -38,19 +38,20 @@ const GoalFormModal = ({ visible, onCancel, onSubmit, initialData,fetchGoals }) 
             },
           }
         );
-        message.success('Goal added successfully!');
-        fetchGoals()
+        toast.success(' Goal added successfully!');
+        fetchGoals();
       } else {
         onSubmit({ ...initialData, ...values });
+        toast.success(' Goal updated successfully!');
       }
 
       form.resetFields();
       onCancel();
     } catch (error) {
       console.error(error);
-      message.error('Something went wrong');
+      toast.error(' Something went wrong while saving the goal.');
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -60,7 +61,7 @@ const GoalFormModal = ({ visible, onCancel, onSubmit, initialData,fetchGoals }) 
       title={initialData ? 'Edit Goal' : 'Add New Goal'}
       onCancel={onCancel}
       onOk={handleOk}
-      confirmLoading={loading} 
+      confirmLoading={loading}
       okText={initialData ? 'Update' : 'Add'}
     >
       <Form form={form} layout="vertical">
@@ -74,7 +75,7 @@ const GoalFormModal = ({ visible, onCancel, onSubmit, initialData,fetchGoals }) 
           </Select>
         </Form.Item>
         <Form.Item name="progress" label="Status" rules={[{ required: true }]}>
-          <Select placeholder='Select status'>
+          <Select placeholder="Select status">
             <Option value="Not Started">Not Started</Option>
             <Option value="In Progress">In Progress</Option>
             <Option value="Completed">Completed</Option>

@@ -26,14 +26,17 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await axios.post("https://airepro-solution-server.vercel.app/api/auth/register", {
-        name,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://airepro-solution-server.vercel.app/api/auth/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
-      login(response.data.token); // Save token and fetch user info
-      navigate("/"); // Redirect to home
+      login(response.data.token);
+      navigate("/");
     } catch (err) {
       if (err.response?.data?.message) {
         setError(err.response.data.message);
@@ -56,11 +59,16 @@ export default function RegisterPage() {
           Create an Account Airepro Solution
         </h2>
 
-        {error && <p className="text-red-500 text-sm mb-3 text-center">{error}</p>}
+        {error && (
+          <p className="text-red-500 text-sm mb-3 text-center">{error}</p>
+        )}
 
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-white">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-white"
+            >
               Full Name
             </label>
             <input
@@ -75,7 +83,10 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-white">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-white"
+            >
               Email
             </label>
             <input
@@ -90,7 +101,10 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-white">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-white"
+            >
               Password
             </label>
             <input
@@ -105,7 +119,10 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-white"
+            >
               Confirm Password
             </label>
             <input
@@ -134,7 +151,10 @@ export default function RegisterPage() {
 
         <p className="mt-4 text-center text-sm text-white">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-300 font-medium hover:underline">
+          <Link
+            to="/login"
+            className="text-blue-300 font-medium hover:underline"
+          >
             Login
           </Link>
         </p>

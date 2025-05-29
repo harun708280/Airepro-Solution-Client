@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Input, DatePicker, Select, Checkbox, message, Button } from "antd";
+import { Modal, Form, Input, DatePicker, Select, Checkbox, Button } from "antd";
 import axios from "axios";
 import dayjs from "dayjs";
+import { toast } from "sonner";
 
 const { TextArea } = Input;
 
@@ -43,12 +44,12 @@ const EditTaskModal = ({ open, onClose, task, fetchTasks }) => {
         }
       );
 
-      message.success("✅ Task updated successfully");
+      toast.success(" Task updated successfully!");
       fetchTasks();
       onClose();
       form.resetFields();
     } catch (error) {
-      message.error("❌ Failed to update task");
+      toast.error(" Failed to update task.");
       console.error("Update Error:", error);
     } finally {
       setLoading(false);
