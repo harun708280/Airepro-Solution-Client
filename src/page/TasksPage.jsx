@@ -92,7 +92,7 @@ const TasksPage = () => {
         <Row gutter={16}>
           {Object.entries(groupedTasks).map(([status, taskList]) => (
             <Col span={8} key={status}>
-              <div className={`p-4 rounded-lg border ${statusColors[status]}`}>
+              <div className={`p-4 transition-all duration-300 rounded-lg border ${statusColors[status]}`}>
                 <Title level={4} className="capitalize mb-4">
                   {statusLabels[status]} ({taskList.length})
                 </Title>
