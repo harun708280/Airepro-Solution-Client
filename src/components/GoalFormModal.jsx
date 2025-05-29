@@ -26,7 +26,7 @@ const GoalFormModal = ({ visible, onCancel, onSubmit, initialData,fetchGoals }) 
 
       if (!initialData) {
         await axios.post(
-          'http://localhost:5000/api/goals',
+          'https://airepro-solution-server.vercel.app/api/goals',
           {
             ...values,
             

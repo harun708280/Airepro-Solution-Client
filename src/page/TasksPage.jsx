@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Row, Col, Button, Typography, message } from "antd";
-// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import AddTaskModal from "@/components/AddTaskModal";
 import TaskCard from "@/components/TaskCard";
@@ -19,7 +18,7 @@ const TasksPage = () => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/tasks", {
+      const res = await axios.get("https://airepro-solution-server.vercel.app/api/tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(res.data);
@@ -29,17 +28,14 @@ const TasksPage = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
-    
     try {
-      await axios.delete(`http://localhost:5000/api/tasks/${id}`, {
+      await axios.delete(`https://airepro-solution-server.vercel.app/api/tasks/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       fetchTasks();
       message.success("Task deleted");
-     
     } catch (error) {
       console.error("Delete failed:", error.message);
       message.error("Failed to delete task");
@@ -51,7 +47,7 @@ const TasksPage = () => {
       const task = tasks.find((t) => t._id === id);
       const updatedTask = { ...task, status };
       const res = await axios.put(
-        `http://localhost:5000/api/tasks/${id}`,
+        `https://airepro-solution-server.vercel.app/api/tasks/${id}`,
         updatedTask,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -91,15 +87,17 @@ const TasksPage = () => {
   };
 
   const statusColors = {
-    todo: "bg-blue-100 border-blue-400",
-    "in-progress": "bg-yellow-100 border-yellow-400",
-    done: "bg-green-100 border-green-400",
+    todo: "bg-blue-100 dark:bg-blue-900 border-blue-400",
+    "in-progress": "bg-yellow-100 dark:bg-yellow-900 border-yellow-400",
+    done: "bg-green-100 dark:bg-green-900 border-green-400",
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6  min-h-screen transition-all duration-300">
       <div className="flex justify-between items-center flex-wrap mb-6">
-        <Title level={3}>Drag & Drop Task Board</Title>
+        <Title level={3} className="!text-gray-900 dark:!text-white">
+          Drag & Drop Task Board
+        </Title>
         <Button type="primary" onClick={() => setModalOpen(true)}>
           Add Task
         </Button>
@@ -112,7 +110,10 @@ const TasksPage = () => {
               <div
                 className={`p-4 transition-all duration-300 rounded-lg border ${statusColors[status]}`}
               >
-                <Title level={4} className="capitalize mb-4">
+                <Title
+                  level={4}
+                  className="capitalize mb-4 !text-gray-800 dark:!text-white"
+                >
                   {statusLabels[status]} ({taskList.length})
                 </Title>
 
@@ -144,8 +145,7 @@ const TasksPage = () => {
                                     )
                                   )
                                 }
-                                onDelete={handleDelete
-                                }
+                                onDelete={handleDelete}
                                 fetchTasks={fetchTasks}
                               />
                             </div>

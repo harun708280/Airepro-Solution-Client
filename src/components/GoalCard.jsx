@@ -13,7 +13,7 @@ const GoalCard = ({ goal, onEdit, onDelete }) => {
   return (
     <Card
       hoverable
-      className="rounded-xl shadow-md transition-all bg-white dark:bg-[#1f1f1f] border border-gray-200 dark:border-gray-700"
+      className="rounded-xl bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-md border-gray-200 dark:border-gray-700"
       bodyStyle={{ padding: "20px" }}
     >
       {/* Header: Title + Actions */}

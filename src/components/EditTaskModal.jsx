@@ -34,7 +34,7 @@ const EditTaskModal = ({ open, onClose, task, fetchTasks }) => {
       };
 
       await axios.put(
-        `http://localhost:5000/api/tasks/${task._id}`,
+        `https://airepro-solution-server.vercel.app/api/tasks/${task._id}`,
         updatedTask,
         {
           headers: {

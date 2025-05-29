@@ -27,7 +27,7 @@ const AddTaskModal = ({ open, onClose,fetchTasks }) => {
 
       // Axios API call
       const response = await axios.post(
-        "http://localhost:5000/api/tasks",
+        "https://airepro-solution-server.vercel.app/api/tasks",
         formattedData,
         {
           headers: {

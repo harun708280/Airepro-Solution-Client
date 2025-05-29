@@ -17,6 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { Link } from "react-router-dom"
 
 const data = {
   user: {
@@ -50,10 +51,10 @@ export function AppSidebar({ ...props }) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className=" h- data-[slot=sidebar-menu-button]:!p-1.5">
-              <a href="/dashboard">
+              <Link to="/">
                 <img src="/logo.png" className="h-7" alt="" />
                 <span className="text-lg font-bold">Airepro Solution</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

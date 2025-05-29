@@ -8,44 +8,43 @@ const DashboardPage = () => {
   const { user } = useContext(AuthContext);
   const [quote, setQuote] = useState('');
 
-  useEffect(() => {
+useEffect(() => {
   const fetchQuote = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/quote');
-      if (res.data && res.data.length > 0) {
-        const { q, a } = res.data[0]; // 🟢 শুধু q = quote, a = author
+      const res = await axios.get('https://airepro-solution-server.vercel.app/api/quote');
+      console.log("QUOTE RESPONSE:", res.data);
+
+      if (Array.isArray(res.data) && res.data.length > 0) {
+        const { q, a } = res.data[0];
         setQuote(`${q} — ${a}`);
+      } else if (res.data.quote) {
+        setQuote(res.data.quote);
+      } else {
+        setQuote("Stay motivated and achieve your goals!");
       }
     } catch (error) {
-      console.error('Failed to fetch quote:', error);
-      setQuote("Stay motivated and focused! — Unknown");
+      console.error("Error fetching quote:", error);
+      setQuote("Couldn't load quote. Stay strong!");
     }
   };
 
   fetchQuote();
 }, []);
 
-
-  console.log(quote);
-  
-
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen  transition-colors duration-300">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md shadow-md rounded-b-xl px-6 py-5 sticky top-0 z-10">
-        <h1 className="text-3xl font-semibold text-gray-900">
-          Welcome, <span className="text-indigo-600">{user?.name}</span>!
+      <header className="backdrop-blur-md shadow-md rounded-b-xl px-4 md:px-6 py-5 sticky top-0 z-10 bg-white/70 dark:bg-gray-800/60 transition-colors duration-300">
+        <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
+          Welcome, <span className="text-indigo-600 dark:text-indigo-400">{user?.name}</span>
         </h1>
-        <p className="mt-2 italic text-gray-600 max-w-xl">{`"${quote}"`}</p>
+        <p className="mt-2 italic text-gray-600 dark:text-gray-300 max-w-xl">{`"${quote}"`}</p>
       </header>
 
-      
-      <main className="p-6 space-y-6">
-        {/* Today's Tasks */}
+      {/* Main content */}
+      <main className="px-4 md:px-6 mt-6 space-y-6">
         <RecentTasksPanel />
-
-        {/* Goals Summary */}
-        <RecentGoalsTable/>
+        <RecentGoalsTable />
       </main>
     </div>
   );

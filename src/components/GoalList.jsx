@@ -14,7 +14,7 @@ const GoalList = () => {
 
   const fetchGoals = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/goals`, {
+      const res = await axios.get(`https://airepro-solution-server.vercel.app/api/goals`, {
         params: { userId: user?._id },
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -45,7 +45,7 @@ const GoalList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/goals/${id}`, {
+      await axios.delete(`https://airepro-solution-server.vercel.app/api/goals/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -61,7 +61,7 @@ const GoalList = () => {
   const handleSubmit = async (updatedGoal) => {
     if (updatedGoal._id) {
       try {
-        await axios.put(`http://localhost:5000/api/goals/${updatedGoal._id}`, updatedGoal, {
+        await axios.put(`https://airepro-solution-server.vercel.app/api/goals/${updatedGoal._id}`, updatedGoal, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -97,7 +97,14 @@ const GoalList = () => {
         </Row>
       ) : (
         <div className="flex justify-center items-center h-[200px]">
-          <Empty description="No goals found." />
+          <Empty
+  description={
+    <span className="text-gray-500 dark:text-gray-100">
+      No goals found.
+    </span>
+  }
+/>
+
         </div>
       )}
 

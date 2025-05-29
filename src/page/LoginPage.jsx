@@ -18,7 +18,7 @@ export default function LoginPage() {
     setIsLoading(true); // Start loading
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("https://airepro-solution-server.vercel.app/api/auth/login", {
         email,
         password,
       });
