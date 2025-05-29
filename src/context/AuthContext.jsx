@@ -36,10 +36,12 @@ export const AuthProvider = ({ children }) => {
     fetchUser(token);
   }, [token]);
 
-  const login = (newToken) => {
-    localStorage.setItem("token", newToken);
-    setToken(newToken);
-  };
+  const login = async (newToken) => {
+  localStorage.setItem("token", newToken);
+  setToken(newToken);
+  await fetchUser(newToken); 
+};
+
 
   const logout = () => {
     localStorage.removeItem("token");

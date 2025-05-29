@@ -35,7 +35,7 @@ export default function RegisterPage() {
         }
       );
 
-      login(response.data.token);
+      await login(response.data.token);
       navigate("/");
     } catch (err) {
       if (err.response?.data?.message) {
